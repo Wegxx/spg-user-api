@@ -1,5 +1,6 @@
 package com.tcc.spg.user.api.model.entity
 
+import com.fasterxml.jackson.annotation.JsonManagedReference
 import jakarta.persistence.*
 import java.time.LocalDate
 
@@ -20,8 +21,8 @@ data class Person (
     @Column
     var birthdate: LocalDate? = LocalDate.now(),
 
-    @Column
-    @OneToOne(mappedBy = "person", cascade = [(CascadeType.ALL)], fetch = FetchType.EAGER)
+    @JsonManagedReference
+    @OneToOne(cascade = [CascadeType.ALL], fetch = FetchType.EAGER, mappedBy = "person")
     var user: User
 )
 

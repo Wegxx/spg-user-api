@@ -1,5 +1,6 @@
 package com.tcc.spg.user.api.model.entity
 
+import com.fasterxml.jackson.annotation.JsonBackReference
 import jakarta.persistence.*
 
 @Entity
@@ -16,9 +17,9 @@ data class User (
     @Column
     var password: String? = "",
 
-    @Column
-    @OneToOne(cascade = [(CascadeType.ALL)], fetch= FetchType.EAGER)
-    @JoinColumn(name = "person_id")
-    var person: Person
+    @JsonBackReference
+    @OneToOne(cascade = [CascadeType.PERSIST], fetch = FetchType.EAGER)
+    @JoinColumn(name="person_id")
+    var person: Person? = null
 )
 
