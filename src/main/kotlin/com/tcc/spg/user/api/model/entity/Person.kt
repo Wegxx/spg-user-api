@@ -5,20 +5,20 @@ import jakarta.persistence.*
 import java.time.LocalDate
 
 @Entity
-@Table(name = "person")
+@Table(name = "persons")
 data class Person (
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
 
-    @Column
+    @Column(name = "name")
     var name: String? = "",
 
-    @Column
+    @Column(name = "cpf")
     var cpf: String? = "",
 
-    @Column
+    @Column(name = "birthdate")
     var birthdate: LocalDate? = LocalDate.now(),
 
     @JsonManagedReference

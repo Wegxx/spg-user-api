@@ -1,11 +1,13 @@
 package com.tcc.spg.user.api.controller
 
+import com.tcc.spg.user.api.model.dto.AddUserRolesDTO
+import com.tcc.spg.user.api.model.entity.Role
 import com.tcc.spg.user.api.model.entity.User
-import com.tcc.spg.user.api.repository.UsersRepository
 import com.tcc.spg.user.api.service.UserService
-import jakarta.persistence.EntityNotFoundException
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.util.stream.Collectors
+
 
 @RestController
 @RequestMapping("/users")
@@ -21,9 +23,12 @@ class UserController(var userService: UserService) {
         return userService.findUserById(id)
     }
 
-    @GetMapping("/{id}")
-    fun updateUserCredentials(@PathVariable id: Long): User {
-        return userService.findUserById(id)
+    @PutMapping("/addRoles")
+    fun addRoles(@RequestBody addUserRolesDTO: AddUserRolesDTO): User{
+        val user = userService.findUserById(addUserRolesDTO.idUser)
+        val roles = addUserRolesDTO.idsRoles.map { role -> Role(role) }.toMutableList()
+        user.roles = roles
+        return userService.saveOrCreate(user);
     }
 
     @DeleteMapping("/{id}")
