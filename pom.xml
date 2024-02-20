@@ -66,13 +66,6 @@
 			<optional>true</optional>
 		</dependency>
 
-		<!-- LOGGER -->
-		<dependency>
-			<groupId>org.kxtra</groupId>
-			<artifactId>kxtra-slf4j</artifactId>
-			<version>2.1.0</version>
-		</dependency>
-
 		<!-- AuthenticationSecurity -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
