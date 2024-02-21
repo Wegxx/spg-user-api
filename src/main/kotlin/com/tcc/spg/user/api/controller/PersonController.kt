@@ -15,7 +15,7 @@ class PersonController(var personService: PersonService) {
     }
 
     //Somente para uso interno, o sign up basico deve ser feito pelo endpoint auth/register
-    @PostMapping()
+    @PostMapping
     fun create(@RequestBody person: Person): ResponseEntity<Person> {
         return ResponseEntity.ok(personService.create(person))
     }
