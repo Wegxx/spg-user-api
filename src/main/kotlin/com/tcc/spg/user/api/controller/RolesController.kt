@@ -1,14 +1,10 @@
 package com.tcc.spg.user.api.controller
 
-import com.tcc.spg.user.api.model.dto.AddUserRolesDTO
 import com.tcc.spg.user.api.model.entity.Role
-import com.tcc.spg.user.api.model.entity.User
 import com.tcc.spg.user.api.repository.RolesRepository
-import com.tcc.spg.user.api.service.UserService
 import jakarta.persistence.EntityNotFoundException
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import java.util.stream.Collectors
 
 
 @RestController

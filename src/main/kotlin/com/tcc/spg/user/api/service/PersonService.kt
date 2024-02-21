@@ -9,11 +9,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class PersonService (var personRepository: PersonRepository,
-                     var userService: UserService) {
-
-    companion object {
-        val TAG: String = "[${this::class.java.declaringClass.simpleName}]"
-    }
+                     var userService: UserDetailsService) {
 
     fun findAll():List<Person>{
         return personRepository.findAll()
