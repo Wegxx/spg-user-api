@@ -15,7 +15,6 @@ class GlobalExceptionHandler {
         const val BAD_CREDENTIALS = "BAD_CREDENTIALS"
     }
 
-
     @ExceptionHandler(WrongPasswordException::class)
     fun wrongPasswordException(ex: WrongPasswordException): ResponseEntity<ErrorDTO> {
         return buildErrorDTOResponse(ErrosEnum.WRONG_PASSWORD.name, mutableListOf(ErrosEnum.WRONG_PASSWORD.message), HttpStatus.UNAUTHORIZED)
