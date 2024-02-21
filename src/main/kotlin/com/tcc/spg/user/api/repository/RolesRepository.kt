@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface RolesRepository: JpaRepository<Role, Long> {
+
+    fun findRoleByName(name: String) : Role?
 }

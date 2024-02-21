@@ -1,5 +1,6 @@
 package com.tcc.spg.user.api.service
 
+import com.tcc.spg.user.api.exception.UserNotFoundException
 import com.tcc.spg.user.api.model.entity.User
 import com.tcc.spg.user.api.repository.UsersRepository
 import jakarta.persistence.EntityNotFoundException
@@ -16,7 +17,11 @@ class UserService (var userRepository: UsersRepository) {
         return userRepository.findAll()
     }
 
-    fun saveOrCreate(user: User): User {
+    fun findByLogin(login: String): User? {
+        return userRepository.findUserByLogin(login).orElseThrow { UserNotFoundException(login) }
+    }
+
+    fun save(user: User): User {
         return userRepository.save(user)
     }
 

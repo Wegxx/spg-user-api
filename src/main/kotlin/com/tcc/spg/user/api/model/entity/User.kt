@@ -10,25 +10,56 @@ import org.springframework.security.core.userdetails.UserDetails
 @Entity
 @Table(name = "users")
 @Data
-data class User (
+class User: UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null,
+    val id: Long? = null
 
     @Column(unique = true, name = "login")
-    var login: String? = "",
+    var login: String = ""
 
     @Column(name = "password")
-    var password: String? = "",
+    var userPassword: String = ""
 
     @JsonBackReference
     @OneToOne(cascade = [CascadeType.PERSIST], fetch = FetchType.EAGER)
-    @JoinColumn(name="person_id")
-    var person: Person? = null,
+    @JoinColumn(name = "person_id")
+    var person: Person? = null
 
     @ManyToMany
     var roles: MutableList<Role> = mutableListOf()
+    override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
+        val authorities = mutableListOf<GrantedAuthority>()
+        this.roles.forEach{
+            authorities.add(SimpleGrantedAuthority("ROLE_" + it.name))
+        }
+        return authorities
+    }
 
-)
+    override fun getPassword(): String {
+        return userPassword
+    }
+
+    override fun getUsername(): String {
+        return login
+    }
+
+    override fun isAccountNonExpired(): Boolean {
+        return true
+    }
+
+    override fun isAccountNonLocked(): Boolean {
+        return true
+    }
+
+    override fun isCredentialsNonExpired(): Boolean {
+        return true
+    }
+
+    override fun isEnabled(): Boolean {
+        return true
+    }
+
+}
 

@@ -7,7 +7,7 @@ import jakarta.persistence.*
 data class Role (
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
 
     @Column(name = "name")
