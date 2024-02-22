@@ -26,11 +26,6 @@ class RolesController(var rolesRepository: RolesRepository) {
         return rolesRepository.save(role)
     }
 
-//    @PutMapping("/changePassword")
-//    fun changePassword(@RequestBody changePasswordDTO: ChangePasswordDTO): User {
-//        return userService.changePassword(changePasswordDTO)
-//    }
-
     @DeleteMapping("/{id}")
     fun deleteUser(@PathVariable id: Long) {
         val role = findRole(id)
