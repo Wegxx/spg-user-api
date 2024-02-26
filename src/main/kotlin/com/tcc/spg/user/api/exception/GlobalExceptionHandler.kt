@@ -35,6 +35,16 @@ class GlobalExceptionHandler {
         return buildErrorDTOResponse(ErrosEnum.USER_NOT_FOUND.name, mutableListOf(ErrosEnum.USER_NOT_FOUND.message + ex.login), HttpStatus.NOT_FOUND)
     }
 
+    @ExceptionHandler(GenerationJWTTokenException::class)
+    fun duplicatedLoginException(ex: GenerationJWTTokenException): ResponseEntity<ErrorDTO> {
+        val exceptionMessage = ex.message ?: ""
+        return buildErrorDTOResponse(
+            ErrosEnum.ERROR_WHILE_GENERATING_TOKEN.name,
+            mutableListOf(ErrosEnum.ERROR_WHILE_GENERATING_TOKEN.message + ex.login, exceptionMessage),
+            HttpStatus.INTERNAL_SERVER_ERROR
+        )
+    }
+
     fun buildErrorDTOResponse(message: String, details: MutableList<String>, status: HttpStatus): ResponseEntity<ErrorDTO>{
         return ResponseEntity(ErrorDTO(message, details), status)
     }

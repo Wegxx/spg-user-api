@@ -19,7 +19,7 @@ class UserDetailsService(var userRepository: UsersRepository): UserDetailsServic
         return userRepository.findAll()
     }
 
-    fun findByLogin(login: String): User? {
+    fun findByLogin(login: String): User {
         return userRepository.findUserByLogin(login).orElseThrow { UserNotFoundException(login) }
     }
 
