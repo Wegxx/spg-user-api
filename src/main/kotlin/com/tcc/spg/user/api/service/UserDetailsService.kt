@@ -1,9 +1,10 @@
 package com.tcc.spg.user.api.service
 
+import com.tcc.spg.user.api.enum.ErrosEnum
 import com.tcc.spg.user.api.exception.UserNotFoundException
 import com.tcc.spg.user.api.model.entity.User
 import com.tcc.spg.user.api.repository.UsersRepository
-import jakarta.persistence.EntityNotFoundException
+import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Service
@@ -12,7 +13,11 @@ import org.springframework.stereotype.Service
 class UserDetailsService(var userRepository: UsersRepository): UserDetailsService {
 
     override fun loadUserByUsername(username: String): UserDetails? {
-        return findByLogin(username)
+        return try {
+            findByLogin(username)
+        } catch (ex: UserNotFoundException){
+            throw BadCredentialsException(ErrosEnum.BAD_CREDENTIALS.message)
+        }
     }
 
     fun findAll():List<User>{
@@ -28,12 +33,12 @@ class UserDetailsService(var userRepository: UsersRepository): UserDetailsServic
     }
 
     fun findUserById(id: Long): User {
-        val userDocument = userRepository.findById(id).orElseThrow { EntityNotFoundException() }
+        val userDocument = userRepository.findById(id).orElseThrow { UserNotFoundException("id: " + {id})}
         return userDocument
     }
 
     fun deleteUser(id: Long){
-        val userDocument = userRepository.findById(id).orElseThrow { EntityNotFoundException() }
+        val userDocument = userRepository.findById(id).orElseThrow { UserNotFoundException("id: " + {id}) }
         return userRepository.delete(userDocument)
     }
 

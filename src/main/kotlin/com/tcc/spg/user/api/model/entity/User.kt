@@ -27,7 +27,7 @@ class User: UserDetails {
     @JoinColumn(name = "person_id")
     var person: Person? = null
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     var roles: MutableList<Role> = mutableListOf()
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
         val authorities = mutableListOf<GrantedAuthority>()

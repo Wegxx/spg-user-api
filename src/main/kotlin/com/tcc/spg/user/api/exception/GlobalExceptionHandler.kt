@@ -11,10 +11,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 @RestControllerAdvice
 class GlobalExceptionHandler {
 
-    companion object{
-        const val BAD_CREDENTIALS = "BAD_CREDENTIALS"
-    }
-
     @ExceptionHandler(WrongPasswordException::class)
     fun wrongPasswordException(ex: WrongPasswordException): ResponseEntity<ErrorDTO> {
         return buildErrorDTOResponse(ErrosEnum.WRONG_PASSWORD.name, mutableListOf(ErrosEnum.WRONG_PASSWORD.message), HttpStatus.UNAUTHORIZED)
@@ -27,7 +23,7 @@ class GlobalExceptionHandler {
 
     @ExceptionHandler(BadCredentialsException::class)
     fun duplicatedLoginException(ex: BadCredentialsException): ResponseEntity<ErrorDTO> {
-        return buildErrorDTOResponse(BAD_CREDENTIALS, mutableListOf(ex.message ?: ""), HttpStatus.UNAUTHORIZED)
+        return buildErrorDTOResponse(ErrosEnum.BAD_CREDENTIALS.name, mutableListOf(ex.message ?: ""), HttpStatus.UNAUTHORIZED)
     }
 
     @ExceptionHandler(UserNotFoundException::class)

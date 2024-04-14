@@ -1,29 +1,36 @@
 package com.tcc.spg.user.api.service
 
 import com.tcc.spg.user.api.exception.DuplicatedLoginException
+import com.tcc.spg.user.api.exception.UserNotFoundException
 import com.tcc.spg.user.api.model.entity.Person
 import com.tcc.spg.user.api.repository.PersonRepository
+import com.tcc.spg.user.api.repository.RolesRepository
 import jakarta.persistence.EntityNotFoundException
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 
 @Service
 class PersonService (var personRepository: PersonRepository,
-                     var userService: UserDetailsService) {
+                     var userService: UserDetailsService,
+                     var rolesRepository: RolesRepository) {
 
     fun findAll():List<Person>{
         return personRepository.findAll()
     }
 
     fun create(person: Person): Person {
-        if (userService.findByLogin(person.user.login) != null){
+        try {
+            userService.findByLogin(person.user.login)
             throw DuplicatedLoginException(person.user.login)
+        }catch (ex: UserNotFoundException){
+            val encryptedPassword = BCryptPasswordEncoder().encode(person.user.userPassword)
+            val userRole = rolesRepository.findRoleByName("USER")
+            person.user.userPassword = encryptedPassword
+            if (userRole != null) person.user.roles.add(userRole)
+            val user = userService.save(person.user).apply { this.person = person }
+            person.user = user
+            return personRepository.save(person)
         }
-        val encryptedPassword = BCryptPasswordEncoder().encode(person.user.userPassword)
-        person.user.userPassword = encryptedPassword
-        val user = userService.save(person.user).apply { this.person = person }
-        person.user = user
-        return personRepository.save(person)
     }
 
     fun findPersonById(id: Long): Person {
