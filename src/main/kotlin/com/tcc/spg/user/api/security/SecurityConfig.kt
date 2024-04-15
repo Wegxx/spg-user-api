@@ -33,7 +33,7 @@ class SecurityConfiguration (val securityFilter: SecurityFilter) {
             .authorizeHttpRequests { auth -> auth
                 .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                 .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
-                .requestMatchers(HttpMethod.POST, "/person").permitAll()
+//                .requestMatchers(HttpMethod.POST, "/person").permitAll()
                 .anyRequest().authenticated()
 ////              .requestMatchers("/person", "/users", "/roles", "/users/**").permitAll()}
 ////              .headers { headers -> headers.frameOptions { it.disable() }

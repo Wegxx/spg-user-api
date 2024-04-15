@@ -1,7 +1,7 @@
 package com.tcc.spg.user.api.service
 
 import com.tcc.spg.user.api.enum.ErrosEnum
-import com.tcc.spg.user.api.exception.UserNotFoundException
+import com.tcc.spg.user.api.exception.RegisterNotFoundException
 import com.tcc.spg.user.api.model.entity.User
 import com.tcc.spg.user.api.repository.UsersRepository
 import org.springframework.security.authentication.BadCredentialsException
@@ -15,7 +15,7 @@ class UserDetailsService(var userRepository: UsersRepository): UserDetailsServic
     override fun loadUserByUsername(username: String): UserDetails? {
         return try {
             findByLogin(username)
-        } catch (ex: UserNotFoundException){
+        } catch (ex: RegisterNotFoundException){
             throw BadCredentialsException(ErrosEnum.BAD_CREDENTIALS.message)
         }
     }
@@ -25,7 +25,7 @@ class UserDetailsService(var userRepository: UsersRepository): UserDetailsServic
     }
 
     fun findByLogin(login: String): User {
-        return userRepository.findUserByLogin(login).orElseThrow { UserNotFoundException(login) }
+        return userRepository.findUserByLogin(login).orElseThrow { RegisterNotFoundException(login) }
     }
 
     fun save(user: User): User {
@@ -33,12 +33,12 @@ class UserDetailsService(var userRepository: UsersRepository): UserDetailsServic
     }
 
     fun findUserById(id: Long): User {
-        val userDocument = userRepository.findById(id).orElseThrow { UserNotFoundException("id: " + {id})}
+        val userDocument = userRepository.findById(id).orElseThrow { RegisterNotFoundException("id: $id")}
         return userDocument
     }
 
     fun deleteUser(id: Long){
-        val userDocument = userRepository.findById(id).orElseThrow { UserNotFoundException("id: " + {id}) }
+        val userDocument = userRepository.findById(id).orElseThrow { RegisterNotFoundException("id: $id") }
         return userRepository.delete(userDocument)
     }
 

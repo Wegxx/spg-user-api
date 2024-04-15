@@ -1,11 +1,10 @@
 package com.tcc.spg.user.api.service
 
 import com.tcc.spg.user.api.exception.DuplicatedLoginException
-import com.tcc.spg.user.api.exception.UserNotFoundException
+import com.tcc.spg.user.api.exception.RegisterNotFoundException
 import com.tcc.spg.user.api.model.entity.Person
 import com.tcc.spg.user.api.repository.PersonRepository
 import com.tcc.spg.user.api.repository.RolesRepository
-import jakarta.persistence.EntityNotFoundException
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 
@@ -22,7 +21,7 @@ class PersonService (var personRepository: PersonRepository,
         try {
             userService.findByLogin(person.user.login)
             throw DuplicatedLoginException(person.user.login)
-        }catch (ex: UserNotFoundException){
+        }catch (ex: RegisterNotFoundException){
             val encryptedPassword = BCryptPasswordEncoder().encode(person.user.userPassword)
             val userRole = rolesRepository.findRoleByName("USER")
             person.user.userPassword = encryptedPassword
@@ -34,11 +33,11 @@ class PersonService (var personRepository: PersonRepository,
     }
 
     fun findPersonById(id: Long): Person {
-        return personRepository.findById(id).orElseThrow { EntityNotFoundException() }
+        return personRepository.findById(id).orElseThrow { RegisterNotFoundException("id: $id") }
     }
 
     fun updatePerson(person: Person, id: Long): Person {
-        val personDocument = personRepository.findById(id).orElseThrow { EntityNotFoundException() }
+        val personDocument = personRepository.findById(id).orElseThrow { RegisterNotFoundException("id: $id")}
         personDocument.apply {
             this.name = person.name
             this.cpf = person.cpf
@@ -48,7 +47,7 @@ class PersonService (var personRepository: PersonRepository,
     }
 
     fun deletePerson(id: Long){
-        val personDocument = personRepository.findById(id).orElseThrow { EntityNotFoundException() }
+        val personDocument = personRepository.findById(id).orElseThrow { RegisterNotFoundException("id: $id")}
         return personRepository.delete(personDocument)
     }
 }

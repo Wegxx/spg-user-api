@@ -22,17 +22,27 @@ class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(BadCredentialsException::class)
-    fun duplicatedLoginException(ex: BadCredentialsException): ResponseEntity<ErrorDTO> {
+    fun badCredentialsException(ex: BadCredentialsException): ResponseEntity<ErrorDTO> {
         return buildErrorDTOResponse(ErrosEnum.BAD_CREDENTIALS.name, mutableListOf(ex.message ?: ""), HttpStatus.UNAUTHORIZED)
     }
 
-    @ExceptionHandler(UserNotFoundException::class)
-    fun duplicatedLoginException(ex: UserNotFoundException): ResponseEntity<ErrorDTO> {
-        return buildErrorDTOResponse(ErrosEnum.USER_NOT_FOUND.name, mutableListOf(ErrosEnum.USER_NOT_FOUND.message + ex.login), HttpStatus.NOT_FOUND)
+    @ExceptionHandler(RegisterNotFoundException::class)
+    fun registerNotFoundException(ex: RegisterNotFoundException): ResponseEntity<ErrorDTO> {
+        return buildErrorDTOResponse(ErrosEnum.REGISTER_NOT_FOUND.name, mutableListOf(ErrosEnum.REGISTER_NOT_FOUND.message + ex.parameter), HttpStatus.NOT_FOUND)
+    }
+
+    @ExceptionHandler(DuplicatedSpecializationName::class)
+    fun duplicatedSpecializationName(ex: DuplicatedSpecializationName): ResponseEntity<ErrorDTO> {
+        return buildErrorDTOResponse(ErrosEnum.DUPLICATED_SPECIALIZATION.name, mutableListOf(ErrosEnum.DUPLICATED_SPECIALIZATION.message), HttpStatus.BAD_REQUEST)
+    }
+
+    @ExceptionHandler(DuplicatedMatrixName::class)
+    fun duplicatedMatrixName(ex: DuplicatedMatrixName): ResponseEntity<ErrorDTO> {
+        return buildErrorDTOResponse(ErrosEnum.DUPLICATED_MATRIX.name, mutableListOf(ErrosEnum.DUPLICATED_MATRIX.message), HttpStatus.BAD_REQUEST)
     }
 
     @ExceptionHandler(GenerationJWTTokenException::class)
-    fun duplicatedLoginException(ex: GenerationJWTTokenException): ResponseEntity<ErrorDTO> {
+    fun generationJWTTokenException(ex: GenerationJWTTokenException): ResponseEntity<ErrorDTO> {
         val exceptionMessage = ex.message ?: ""
         return buildErrorDTOResponse(
             ErrosEnum.ERROR_WHILE_GENERATING_TOKEN.name,
