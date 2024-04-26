@@ -1,7 +1,9 @@
 package com.tcc.spg.user.api.controller
 
+import com.tcc.spg.user.api.infix.toTeacherVO
+import com.tcc.spg.user.api.infix.toVO
 import com.tcc.spg.user.api.model.dto.TeacherDTO
-import com.tcc.spg.user.api.model.entity.Teacher
+import com.tcc.spg.user.api.model.vo.teacher.TeacherVO
 import com.tcc.spg.user.api.service.TeacherService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -12,18 +14,18 @@ import org.springframework.web.bind.annotation.*
 class TeacherController(val teacherService: TeacherService) {
 
     @GetMapping
-    fun getAll():ResponseEntity<List<Teacher>>{
-        return ResponseEntity.ok(teacherService.findAll())
+    fun getAll():ResponseEntity<List<TeacherVO>>{
+        return ResponseEntity.ok(teacherService.findAll().toTeacherVO())
     }
 
     @GetMapping("/{id}")
-    fun findById(@PathVariable id: Long): ResponseEntity<Teacher> {
-        return ResponseEntity.ok(teacherService.findById(id))
+    fun findById(@PathVariable id: Long): ResponseEntity<TeacherVO> {
+        return ResponseEntity.ok(teacherService.findById(id).toVO())
     }
 
     @PostMapping
-    fun create(@RequestBody teacherDTO: TeacherDTO): ResponseEntity<Teacher> {
-        return ResponseEntity.ok(teacherService.create(teacherDTO))
+    fun create(@RequestBody teacherDTO: TeacherDTO): ResponseEntity<TeacherVO> {
+        return ResponseEntity.ok(teacherService.create(teacherDTO).toVO())
     }
 
     @DeleteMapping("/{id}")

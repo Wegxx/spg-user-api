@@ -1,7 +1,9 @@
 package com.tcc.spg.user.api.controller
 
+import com.tcc.spg.user.api.infix.toSubjectVO
+import com.tcc.spg.user.api.infix.toVO
 import com.tcc.spg.user.api.model.dto.SubjectDTO
-import com.tcc.spg.user.api.model.entity.Subject
+import com.tcc.spg.user.api.model.vo.subject.SubjectVO
 import com.tcc.spg.user.api.service.SubjectService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -12,18 +14,18 @@ import org.springframework.web.bind.annotation.*
 class SubjectController(val subjectService: SubjectService) {
 
     @GetMapping
-    fun getAll():ResponseEntity<List<Subject>>{
-        return ResponseEntity.ok(subjectService.findAll())
+    fun getAll():ResponseEntity<List<SubjectVO>>{
+        return ResponseEntity.ok(subjectService.findAll().toSubjectVO())
     }
 
     @GetMapping("/{id}")
-    fun findById(@PathVariable id: Long): ResponseEntity<Subject> {
-        return ResponseEntity.ok(subjectService.findById(id))
+    fun findById(@PathVariable id: Long): ResponseEntity<SubjectVO> {
+        return ResponseEntity.ok(subjectService.findById(id).toVO())
     }
 
     @PostMapping
-    fun create(@RequestBody subjectDTO: SubjectDTO): ResponseEntity<Subject> {
-        return ResponseEntity.ok(subjectService.create(subjectDTO))
+    fun create(@RequestBody subjectDTO: SubjectDTO): ResponseEntity<SubjectVO> {
+        return ResponseEntity.ok(subjectService.create(subjectDTO).toVO())
     }
 
     @DeleteMapping("/{id}")

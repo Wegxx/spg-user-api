@@ -109,3 +109,21 @@ fun Matrix.toSpecializationMatrixVO(): SpecializationMatrixVO {
         name = this.name
     )
 }
+
+fun List<ScheduledClass>.toScheduledClassVO(): List<ScheduledClassVO> = this.map { it.toVO() }
+
+fun List<AvaliableTime>.toAvaliableTimeVO(): List<AvaliableTimeVO> = this.map { it.toVO() }
+
+fun List<ClassGroup>.toClassGroupVO(): List<ClassGroupVO> = this.map { it.toVO() }
+
+fun List<Coordenador>.toCoordenadorVO(): List<CoordenadorVO> = this.map { it.toVO() }
+
+fun List<ExceptionDates>.toExceptionDatesVO(): List<ExceptionDateVO> = this.map { it.toVO() }
+
+fun List<Matrix>.toMatrixVO(): List<MatrixVO> = this.map { it.toVO() }
+
+fun List<Specialization>.toSpecializationVO(): List<SpecializationVO> = this.map { it.toVO() }
+
+fun List<Subject>.toSubjectVO(): List<SubjectVO> = this.map { it.toVO() }
+
+fun List<Teacher>.toTeacherVO(): List<TeacherVO> = this.map { it.toVO() }
