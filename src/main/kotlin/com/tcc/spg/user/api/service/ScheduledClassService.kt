@@ -23,7 +23,8 @@ class ScheduledClassService (val scheduledClassesRepository: ScheduledClassesRep
         val scheduledClass = ScheduledClass(
             avaliableTime = avaliableTime,
             subject = subject,
-            classGroup = classGroup)
+            classGroup = classGroup,
+            date = scheduledClassDTO.date)
         return scheduledClassesRepository.save(scheduledClass)
     }
 
