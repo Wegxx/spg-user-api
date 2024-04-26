@@ -1,5 +1,6 @@
 package com.tcc.spg.user.api.controller
 
+import com.tcc.spg.user.api.model.dto.TeacherDTO
 import com.tcc.spg.user.api.model.entity.Teacher
 import com.tcc.spg.user.api.service.TeacherService
 import org.springframework.http.ResponseEntity
@@ -21,8 +22,8 @@ class TeacherController(val teacherService: TeacherService) {
     }
 
     @PostMapping
-    fun create(@RequestBody personId: Long): ResponseEntity<Teacher> {
-        return ResponseEntity.ok(teacherService.create(personId))
+    fun create(@RequestBody teacherDTO: TeacherDTO): ResponseEntity<Teacher> {
+        return ResponseEntity.ok(teacherService.create(teacherDTO))
     }
 
     @DeleteMapping("/{id}")

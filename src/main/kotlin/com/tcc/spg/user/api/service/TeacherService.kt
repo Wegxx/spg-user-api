@@ -1,6 +1,7 @@
 package com.tcc.spg.user.api.service
 
 import com.tcc.spg.user.api.exception.RegisterNotFoundException
+import com.tcc.spg.user.api.model.dto.TeacherDTO
 import com.tcc.spg.user.api.model.entity.Teacher
 import com.tcc.spg.user.api.repository.TeacherRepository
 import org.springframework.stereotype.Service
@@ -13,10 +14,11 @@ class TeacherService (val teacherRepository: TeacherRepository,
         return teacherRepository.findAll()
     }
 
-    fun create(personId: Long): Teacher {
-        val person = personService.findPersonById(personId)
+    fun create(teacherDTO: TeacherDTO): Teacher {
+        val person = personService.findPersonById(teacherDTO.personId)
         val teacher = Teacher(person = person )
         return teacherRepository.save(teacher)
+        // fazer tratativa de não criar novo teacher caso o usuário ja seja um
     }
 
     fun findById(id: Long): Teacher {

@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface CoordenadorRepository: JpaRepository<Coordenador, Long> {
+
+    fun findByPersonId (id: Long) : Coordenador
 }

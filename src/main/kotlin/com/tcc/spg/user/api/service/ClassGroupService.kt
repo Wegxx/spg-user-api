@@ -1,6 +1,7 @@
 package com.tcc.spg.user.api.service
 
 import com.tcc.spg.user.api.exception.RegisterNotFoundException
+import com.tcc.spg.user.api.model.dto.ClassGroupDTO
 import com.tcc.spg.user.api.model.entity.ClassGroup
 import com.tcc.spg.user.api.repository.ClassGroupRepository
 import org.springframework.stereotype.Service
@@ -13,8 +14,8 @@ class ClassGroupService (val classGroupRepository: ClassGroupRepository,
         return classGroupRepository.findAll()
     }
 
-    fun create(matrixId: Long): ClassGroup {
-        val matrix = matrixService.findById(matrixId)
+    fun create(classDTO: ClassGroupDTO): ClassGroup {
+        val matrix = matrixService.findById(classDTO.matrixId)
         val classGroup = ClassGroup(matrix = matrix)
         return classGroupRepository.save(classGroup)
     }

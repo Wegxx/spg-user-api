@@ -43,7 +43,7 @@ class GlobalExceptionHandler {
 
     @ExceptionHandler(InvalidWeekDate::class)
     fun invalidWeekDate(ex: InvalidWeekDate): ResponseEntity<ErrorDTO> {
-        return buildErrorDTOResponse(ErrosEnum.BAD_REQUEST.name, mutableListOf(ErrosEnum.DUPLICATED_MATRIX.message, ex.messageWeekDay), HttpStatus.BAD_REQUEST)
+        return buildErrorDTOResponse(ErrosEnum.BAD_REQUEST.name, mutableListOf(ErrosEnum.BAD_REQUEST.message, ex.messageWeekDay), HttpStatus.BAD_REQUEST)
     }
 
     @ExceptionHandler(GenerationJWTTokenException::class)

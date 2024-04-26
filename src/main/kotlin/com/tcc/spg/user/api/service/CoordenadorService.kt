@@ -1,6 +1,7 @@
 package com.tcc.spg.user.api.service
 
 import com.tcc.spg.user.api.exception.RegisterNotFoundException
+import com.tcc.spg.user.api.model.dto.CoordenadorDTO
 import com.tcc.spg.user.api.model.entity.Coordenador
 import com.tcc.spg.user.api.repository.CoordenadorRepository
 import org.springframework.stereotype.Service
@@ -13,10 +14,11 @@ class CoordenadorService (val coordenadorRepository: CoordenadorRepository,
         return coordenadorRepository.findAll()
     }
 
-    fun create(personId: Long): Coordenador {
-        val person = personService.findPersonById(personId)
+    fun create(coordenadorDTO: CoordenadorDTO): Coordenador {
+        val person = personService.findPersonById(coordenadorDTO.personId)
         val coordenador = Coordenador(person = person )
         return coordenadorRepository.save(coordenador)
+        //adicionar tratativa de não criar o coordenador caso a person já seja um
     }
 
     fun findCoordenatorById(id: Long): Coordenador {

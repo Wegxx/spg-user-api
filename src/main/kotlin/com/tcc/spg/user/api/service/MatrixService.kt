@@ -1,12 +1,12 @@
 package com.tcc.spg.user.api.service
 
-import com.tcc.spg.user.api.exception.DuplicatedSpecializationName
+import com.tcc.spg.user.api.exception.DuplicatedMatrixName
 import com.tcc.spg.user.api.exception.RegisterNotFoundException
 import com.tcc.spg.user.api.model.dto.MatrixDTO
 import com.tcc.spg.user.api.model.entity.Matrix
 import com.tcc.spg.user.api.repository.MatrixRepository
-import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.stereotype.Service
+import java.sql.SQLIntegrityConstraintViolationException
 
 @Service
 class MatrixService (val matrixRepository: MatrixRepository,
@@ -21,8 +21,8 @@ class MatrixService (val matrixRepository: MatrixRepository,
         val matrix = Matrix(specialization = specialization, name = matrixDTO.name)
         try {
             return matrixRepository.save(matrix)
-        }catch (ex: DataIntegrityViolationException){
-            throw DuplicatedSpecializationName(matrixDTO.name)
+        }catch (ex: SQLIntegrityConstraintViolationException){
+            throw DuplicatedMatrixName(matrixDTO.name)
         }
     }
 

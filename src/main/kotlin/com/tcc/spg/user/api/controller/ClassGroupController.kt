@@ -1,5 +1,6 @@
 package com.tcc.spg.user.api.controller
 
+import com.tcc.spg.user.api.model.dto.ClassGroupDTO
 import com.tcc.spg.user.api.model.entity.ClassGroup
 import com.tcc.spg.user.api.service.ClassGroupService
 import org.springframework.http.ResponseEntity
@@ -21,8 +22,8 @@ class ClassGroupController(val classGroupService: ClassGroupService) {
     }
 
     @PostMapping
-    fun create(@RequestBody matrixId: Long): ResponseEntity<ClassGroup> {
-        return ResponseEntity.ok(classGroupService.create(matrixId))
+    fun create(@RequestBody classGroupDTO: ClassGroupDTO): ResponseEntity<ClassGroup> {
+        return ResponseEntity.ok(classGroupService.create(classGroupDTO))
     }
 
     @DeleteMapping("/{id}")
