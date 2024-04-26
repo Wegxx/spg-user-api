@@ -8,6 +8,7 @@ data class RegisterNotFoundException(val parameter: String?) : RuntimeException(
 data class GenerationJWTTokenException(val login: String?, val exception: JWTCreationException) : RuntimeException(login, exception)
 data class DuplicatedSpecializationName(val name: String?) : RuntimeException(name)
 data class DuplicatedMatrixName(val name: String?) : RuntimeException(name)
+data class InvalidWeekDate(val messageWeekDay: String) : RuntimeException(messageWeekDay)
 
 
 

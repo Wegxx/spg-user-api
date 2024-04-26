@@ -21,7 +21,7 @@ class CoordenadorController(val coordenadorService: CoordenadorService) {
     }
 
     @PostMapping
-    fun createCoordenator(@RequestParam personId: Long): ResponseEntity<Coordenador> {
+    fun createCoordenator(@RequestBody personId: Long): ResponseEntity<Coordenador> {
         return ResponseEntity.ok(coordenadorService.create(personId))
     }
 

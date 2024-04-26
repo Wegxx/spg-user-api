@@ -41,6 +41,11 @@ class GlobalExceptionHandler {
         return buildErrorDTOResponse(ErrosEnum.DUPLICATED_MATRIX.name, mutableListOf(ErrosEnum.DUPLICATED_MATRIX.message), HttpStatus.BAD_REQUEST)
     }
 
+    @ExceptionHandler(InvalidWeekDate::class)
+    fun invalidWeekDate(ex: InvalidWeekDate): ResponseEntity<ErrorDTO> {
+        return buildErrorDTOResponse(ErrosEnum.BAD_REQUEST.name, mutableListOf(ErrosEnum.DUPLICATED_MATRIX.message, ex.messageWeekDay), HttpStatus.BAD_REQUEST)
+    }
+
     @ExceptionHandler(GenerationJWTTokenException::class)
     fun generationJWTTokenException(ex: GenerationJWTTokenException): ResponseEntity<ErrorDTO> {
         val exceptionMessage = ex.message ?: ""
