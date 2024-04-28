@@ -2,6 +2,7 @@ package com.tcc.spg.user.api.controller
 
 import com.tcc.spg.user.api.infix.toTeacherVO
 import com.tcc.spg.user.api.infix.toVO
+import com.tcc.spg.user.api.model.dto.TeacherAndUserDTO
 import com.tcc.spg.user.api.model.dto.TeacherDTO
 import com.tcc.spg.user.api.model.vo.teacher.TeacherVO
 import com.tcc.spg.user.api.service.TeacherService
@@ -26,6 +27,11 @@ class TeacherController(val teacherService: TeacherService) {
     @PostMapping
     fun create(@RequestBody teacherDTO: TeacherDTO): ResponseEntity<TeacherVO> {
         return ResponseEntity.ok(teacherService.create(teacherDTO).toVO())
+    }
+
+    @PostMapping("/teacherAndUser")
+    fun create(@RequestBody teacherAndUserDTO: TeacherAndUserDTO): ResponseEntity<TeacherVO> {
+        return ResponseEntity.ok(teacherService.createTeacherAndUser(teacherAndUserDTO).toVO())
     }
 
     @DeleteMapping("/{id}")

@@ -52,11 +52,18 @@
 <!--			<scope>runtime</scope>-->
 <!--		</dependency>-->
 
-		<!-- SQL -->
+		<!-- MySQL -->
+<!--		<dependency>-->
+<!--			<groupId>mysql</groupId>-->
+<!--			<artifactId>mysql-connector-java</artifactId>-->
+<!--			<version>8.0.24</version>-->
+<!--		</dependency>-->
+
+		<!-- Azure SQL -->
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>8.0.24</version>
+			<groupId>com.microsoft.sqlserver</groupId>
+			<artifactId>mssql-jdbc</artifactId>
+			<version>12.6.1.jre11</version>
 		</dependency>
 
 		<!-- LOMBOK -->
