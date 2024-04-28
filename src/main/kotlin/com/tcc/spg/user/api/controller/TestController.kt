@@ -9,6 +9,6 @@ class TestController {
 
     @GetMapping("/test")
     fun register(): String {
-        return "Aplication Running"
+        return "Aplication Running on Azure"
     }
 }
